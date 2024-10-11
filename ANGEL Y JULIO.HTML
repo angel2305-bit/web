@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Datos para una Nueva Organización Comercial y Financiera</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            height: 100%;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar li {
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .sidebar li:hover, .sidebar li.active {
+            background-color: #34495e;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .slide {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .slide.active {
+            display: block;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .interactive-element {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .chart-container {
+            width: 100%;
+            height: 300px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #bdc3c7;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #ecf0f1;
+        }
+        .tool-images {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .tool-images img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: #ecf0f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Contenido</h2>
+            <ul id="menu">
+                <!-- Los elementos del menú se generarán dinámicamente con JavaScript -->
+            </ul>
+        </div>
+        <div class="content" id="content">
+            <!-- Las diapositivas se generarán dinámicamente con JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const slides = [
+            {
+                title: "Introducción al Análisis de Datos",
+                content: `
+                    <h1>Análisis de Datos para una Nueva Organización Comercial y Financiera</h1>
+                    <p>El análisis de datos es fundamental para el éxito de las organizaciones modernas, especialmente para aquellas que recién comienzan en el mercado comercial y financiero.</p>
+                    <div class="interactive-element" onclick="showInfo('importancia')">¿Por qué es importante?</div>
+                    <div id="importancia" style="display:none; margin-top: 10px;">
+                        <ul>
+                            <li>Toma de decisiones informadas</li>
+                            <li>Identificación de oportunidades de mercado</li>
+                            <li>Optimización de procesos internos</li>
+                            <li>Mejora en la experiencia del cliente</li>
+                        </ul>
+                    </div>
+                    <div class="Imagen 1"> 
+                    <img src="IMG/1.jpg" width="800" height="600"> 
+                    </div>
+                `
+            },
+            {
+                title: "Objetivos del Análisis de Datos",
+                content: `
+                    <h1>Objetivos del Análisis de Datos</h1>
+                    <div id="objectives-container">
+                        <div class="objective" data-importance="90">Implementar herramientas de análisis de datos</div>
+                        <div class="objective" data-importance="85">Aplicar técnicas de análisis de datos</div>
+                        <div class="objective" data-importance="80">Integrar métodos de análisis de datos</div>
+                        <div class="objective" data-importance="75">Mejorar la eficiencia operativa</div>
+                        <div class="objective" data-importance="70">Personalizar productos y servicios</div>
+                    </div>
+                    <div id="importance-meter"></div>
+                    <div class="imagen 2">
+                    <img src="IMG/2.jpg" width="800" height="600">    
+                    </div>
+                `
+            },
+            {
+                title: "Herramientas para el Análisis de Datos",
+                content: `
+                    <h1>Herramientas para el Análisis de Datos</h1>
+                    <p>Las herramientas modernas de análisis de datos permiten a las organizaciones procesar y visualizar grandes cantidades de información de manera eficiente.</p>
+                    <h2>Principales herramientas:</h2>
+                    <ul>
+                        <li>Power BI: Herramienta de Microsoft para visualización de datos y business intelligence.</li>
+                        <li>Tableau: Plataforma de análisis visual que permite crear dashboards interactivos.</li>
+                        <li>Python: Lenguaje de programación con potentes bibliotecas para análisis de datos como Pandas y NumPy.</li>
+                        <li>R: Lenguaje estadístico con capacidades avanzadas de análisis y visualización.</li>
+                    </ul>
+                    <div class="interactive-element" onclick="showInfo('comparacion')">Comparar herramientas</div>
+                    <div id="comparacion" style="display:none; margin-top: 10px;">
+                        <table>
+                            <tr>
+                                <th>Herramienta</th>
+                                <th>Facilidad de uso</th>
+                                <th>Capacidad de visualización</th>
+                                <th>Integración</th>
+                            </tr>
+                            <tr>
+                                <td>Power BI</td>
+                                <td>Alta</td>
+                                <td>Excelente</td>
+                                <td>Buena</td>
+                            </tr>
+                            <tr>
+                                <td>Tableau</td>
+                                <td>Media</td>
+                                <td>Excelente</td>
+                                <td>Muy buena</td>
+                            </tr>
+                            <tr>
+                                <td>Python</td>
+                                <td>Baja</td>
+                                <td>Buena</td>
+                                <td>Excelente</td>
+                            </tr>
+                            <tr>
+                                <td>R</td>
+                                <td>Baja</td>
+                                <td>Muy buena</td>
+                                <td>Buena</td>
+                            </tr>
+                        </table>
+                    </div>
+                `
+            },
+            {
+                title: "Técnicas de Análisis de Datos",
+                content: `
+                    <h1>Técnicas de Análisis de Datos</h1>
+                    <p>Las técnicas de análisis de datos permiten extraer información valiosa y descubrir patrones ocultos en los datos.</p>
+                    <h2>Principales técnicas:</h2>
+                    <ul>
+                        <li>Clasificación: Categoriza datos en clases predefinidas.</li>
+                        <li>Regresión: Encuentra relaciones entre variables.</li>
+                        <li>Agrupación (Clustering): Agrupa datos similares.</li>
+                        <li>Análisis de Series Temporales: Estudia datos a lo largo del tiempo.</li>
+                    </ul>
+                    <div class="interactive-element" onclick="showInfo('aplicaciones')">Ver aplicaciones prácticas</div>
+                    <div id="aplicaciones" style="display:none; margin-top: 10px;">
+                        <h3>Aplicaciones Prácticas:</h3>
+                        <ul>
+                            <li>Predicción de la rotación de clientes</li>
+                            <li>Optimización de precios</li>
+                            <li>Detección de fraudes</li>
+                            <li>Personalización de recomendaciones de productos</li>
+                            <li>Análisis de sentimientos en redes sociales</li>
+                        </ul>
+                    </div>
+                    <div class="imagen 3">
+                       <img src="IMG/3.jpg" width="800" height="600"> 
+                    </div>
+                `
+            },
+            {
+                title: "Métodos de Integración de Análisis de Datos",
+                content: `
+                    <h1>Métodos de Integración de Análisis de Datos</h1>
+                    <p>La integración de datos es crucial para obtener una visión completa y unificada de la información de la organización.</p>
+                    <h2>Principales métodos:</h2>
+                    <ul>
+                        <li>Consolidación de datos: Combina datos de múltiples fuentes en un único repositorio.</li>
+                        <li>Replicación de datos: Crea copias de datos en múltiples ubicaciones.</li>
+                        <li>Virtualización de datos: Crea una vista unificada de datos sin moverlos físicamente.</li>
+                        <li>Federación de datos: Similar a la virtualización, pero mantiene los datos en sus fuentes originales.</li>
+                    </ul>
+                    <div class="interactive-element" onclick="showInfo('comparacionMetodos')">Comparar métodos</div>
+                    <div id="comparacionMetodos" style="display:none; margin-top: 10px;">
+                        <table>
+                            <tr>
+                                <th>Método</th>
+                                <th>Complejidad</th>
+                                <th>Costo</th>
+                                <th>Rendimiento</th>
+                                <th>Flexibilidad</th>
+                            </tr>
+                            <tr>
+                                <td>Consolidación</td>
+                                <td>Alta</td>
+                                <td>Alto</td>
+                                <td>Muy bueno</td>
+                                <td>Baja</td>
+                            </tr>
+                            <tr>
+                                <td>Replicación</td>
+                                <td>Media</td>
+                                <td>Medio</td>
+                                <td>Bueno</td>
+                                <td>Media</td>
+                            </tr>
+                            <tr>
+                                <td>Virtualización</td>
+                                <td>Media</td>
+                                <td>Bajo</td>
+                                <td>Variable</td>
+                                <td>Alta</td>
+                            </tr>
+                            <tr>
+                                <td>Federación</td>
+                                <td>Alta</td>
+                                <td>Medio</td>
+                                <td>Variable</td>
+                                <td>Muy alta</td>
+                            </tr>
+                        </table>
+                    </div>
+                `
+            },
+            {
+                title: "Conclusiones y Recomendaciones",
+                content: `
+                    <h1>Conclusiones y Recomendaciones</h1>
+                    <h2>Conclusiones:</h2>
+                    <ul>
+                        <li>El análisis de datos es esencial para el éxito de las nuevas organizaciones comerciales y financieras.</li>
+                        <li>La combinación de herramientas, técnicas y métodos de integración adecuados puede proporcionar una ventaja competitiva significativa.</li>
+                        <li>La elección de las herramientas y métodos depende de las necesidades específicas y recursos de la organización.</li>
+                    </ul>
+                    <h2>Recomendaciones:</h2>
+                    <ul>
+                        <li>Comenzar con herramientas como Power BI para visualización de datos, que son fáciles de usar y ofrecen resultados rápidos.</li>
+                        <li>Implementar técnicas de clasificación y regresión para entender mejor a los clientes y las tendencias del mercado.</li>
+                        <li>Considerar la virtualización de datos como método de integración inicial, ya que ofrece flexibilidad sin requerir grandes inversiones en infraestructura.</li>
+                        <li>Invertir en capacitación del personal para aprovechar al máximo las herramientas y técnicas de análisis de datos.</li>
+                        <li>Establecer un proceso de mejora continua, revisando y actualizando regularmente las estrategias de análisis de datos.</li>
+                    </ul>
+            `
+        }
+    ];
+
+    function loadMenu() {
+        const menu = document.getElementById("menu");
+        slides.forEach((slide, index) => {
+            const li = document.createElement("li");
+            li.textContent = slide.title;
+            li.onclick = () => showSlide(index);
+            menu.appendChild(li);
+        });
+    }
+
+    function showSlide(index) {
+        const content = document.getElementById("content");
+        content.innerHTML = slides[index].content;
+        setActiveMenuItem(index);
+    }
+
+    function setActiveMenuItem(index) {
+        const menuItems = document.querySelectorAll("#menu li");
+        menuItems.forEach((item, i) => {
+            item.classList.toggle("active", i === index);
+        });
+    }
+
+    function showInfo(id) {
+        const element = document.getElementById(id);
+        if (element.style.display === "none") {
+            element.style.display = "block";
+        } else {
+            element.style.display = "none";
+        }
+    }
+
+    window.onload = function() {
+        loadMenu();
+        showSlide(0);  // Muestra la primera diapositiva al cargar
+    };
+</script>
+
+</body>
+</html>
